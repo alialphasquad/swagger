@@ -1,0 +1,416 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model project_details_quickbase {
+  record_id_quickbase                    Int       @id
+  project_name                           String?
+  project_manager                        String?
+  project_status                         String?
+  mcn_number                             String?
+  fua_number                             String?
+  customer_name                          String?
+  install_address                        String?
+  shipping_address                       String?
+  quote_number_netsuite                  String?
+  quote_number_aloha                     String?
+  quote_number_cpq                       String?
+  credit_card_processor                  String?
+  aloha_key_number                       String?
+  sales_order_memo                       String?
+  sales_person                           String?
+  sales_rep_email                        String?
+  completion_sign_off_date               DateTime? @db.Date
+  date_modified_qbrecord                 DateTime? @db.Date
+  webhook_trigger_date                   DateTime? @db.Date
+  webhook_trigger_owner                  String?
+  contact_id                             Int?
+  contact_firstname                      String?
+  contact_lastname                       String?
+  contact_fullname                       String?
+  contact_role                           String?
+  contact_phone                          String?
+  contact_email                          String?
+  current_boc_boh_location               String?
+  current_boc_monitor_location           String?
+  current_boc_existing_kvm               String?
+  current_boc_exisiting_cc_modem         String?
+  current_boc_existing_security_system   String?
+  current_boc_security_system_integrated String?
+  current_boc_printer_interface          String?
+  current_boc_ip_address                 String?
+  third_pty_web_ordering                 String[]
+  third_pty_delivery_to_go               String[]
+  third_pty_customer_loyalty             String[]
+  third_pty_gift_cards                   String[]
+  third_pty_reservations                 String[]
+  third_pty_inventory                    String[]
+  third_pty_scheduling                   String[]
+  third_pty_payments                     String[]
+  third_pty_beverage_services            String[]
+  menu_upload                            Bytes?
+  floor_plan_upload                      Bytes?
+  credit_card_processor_upload           Bytes?
+  project_type                           String?
+  site_name_qualtrics                    String?
+  available_in_portal                    String?
+  last_modified_by                       String?
+  qb_sync                                Boolean?
+  change_timestamp                       Int?
+  salesperson_phone                      String?
+  shipping_address_street                String?
+  shipping_address_city                  String?
+  shipping_address_state                 String?
+  shipping_address_zipcode               String?
+  install_address_street                 String?
+  install_address_city                   String?
+  install_address_state                  String?
+  install_address_zipcode                String?
+  menu_upload_filename                   String?
+  floor_plan_upload_filename             String?
+  credit_card_upload_filename            String?
+  sales_order                            String?
+  main_contact_firstname                 String?
+  main_contact_lastname                  String?
+  project_percentage_complete            Float?    @db.Real
+  project_status_client_portal           String?
+  project_signoff_approved               Boolean?
+  approve_install_date                   Boolean?
+  physical_site_phone                    String?
+  physical_site_email                    String?
+  menu_upload_docid                      Int?
+  floor_plan_upload_docid                Int?
+  credit_card_upload_docid               Int?
+  requested_install_date                 Int?
+  date_created_qbrecord                  Int?
+  questionnaire_submitted_date           Int?
+  project_submitted_date                 Int?
+  project_signoff_date                   Int?
+  qualtrics_url                          String?
+  site_readiness_acknowledgement         Json?     @db.Json
+  // project_template                          String?
+}
+
+model task_details {
+  task_id                 Int       @id
+  record_id_quickbase     Int?
+  mcn_num                 Int?
+  task_name               String?
+  custom_form             String?
+  actual_start_date       DateTime? @db.Date
+  assigned_to             String?
+  status                  String?
+  percent_complete        Float?    @db.Real
+  at_risk                 Boolean?
+  actual_project_work     Float?    @db.Real
+  hours_remaining         Float?    @db.Real
+  customer_milestone      Boolean?
+  baseline_start_date     DateTime? @db.Date
+  baseline_end_date       DateTime? @db.Date
+  actual_end_date         DateTime? @db.Date
+  quickbase_position      Float?    @db.Real
+  ad_hoc                  Boolean?
+  action_required         Boolean?
+  matching_quickbase_task Boolean?
+  display_name            String?
+  change_timestamp        Int?
+  date_modified           DateTime? @db.Date
+  date_created            DateTime? @db.Date
+  start_date              Int?
+  end_date                Int?
+}
+
+model users {
+  id            Int      @id @default(autoincrement())
+  email         String?
+  firstName     String?
+  lastName      String?
+  userName      String?
+  userStatus    String?
+  jobTitle      String?
+  mcn_num       Json?
+  createdAt     String?
+  updatedAt     String?
+  lastLogin     String?
+  authorization Boolean?
+  Role          String?
+}
+
+model task_config_table {
+  task_name                      String?
+  quickbase_position             String?
+  add_module_no_hw               Boolean?
+  add_module_hw                  Boolean?
+  aloha_essentials_refresh       Boolean?
+  connected_payments_addon       Boolean?
+  new_aloha_essentials_install   Boolean?
+  new_install                    Boolean?
+  software_only_essentials       Boolean?
+  software_only_essentials_addon Boolean?
+  stage_and_ship                 Boolean?
+  system_refresh                 Boolean?
+  customer_milestone             Boolean?
+  matching_quickbase_task        Boolean?
+  pizza_grouping                 String?
+  ad_hoc                         Boolean?
+  action_required                Boolean?
+  id                             Int      @id @default(autoincrement())
+  display_name                   String?
+}
+
+model orderDetails {
+  orderNumber                     Int      @id
+  order_complete                  Boolean?
+  txtField                        String?
+  numberField                     Int?
+  percentageField                 Float?   @db.Real
+  currencyField                   Decimal? @db.Money
+  documentField                   Bytes?
+  confirm_site_information        String?
+  bo_comp_location                String?
+  bo_comp_monitor_config          String?
+  bo_comp_kbm_yn                  String?
+  bo_comp_externalmodem_yn        String?
+  bo_comp_securitycam_yn          String?
+  bo_comp_securitycam_aloha_yn    String?
+  bo_printer_usbnetwork_config    String?
+  bo_printer_reinstall_yn         String?
+  bo_printer_config               String?
+  bo_printer_ipaddress            String?  @db.Inet
+  bo_printer_manufacturer         String?
+  bo_printer_model                String?
+  bo_historicaldata_retainlength  String?
+  bo_thirdparty_partners          String[]
+  bo_thirdparty_partners_unlisted String?
+  cs_creditcard_acceptcard_yn     String?
+  cs_creditcard_acceptchip_yn     String?
+  cs_kitchen_print_yn             String?
+  cs_kitchen_monitor_yn           String?
+  cs_kitchen_orderingsystem       String?
+  cs_takeout_guestoption_yn       String?
+  cs_takeout_aloha_yn             String?
+  cs_takeout_alohaconfirm_yn      String?
+  cs_guestseat_software_yn        String?
+  cs_guestseat_software_provider  String?
+  cs_guestseat_pager_yn           String?
+  cs_hotel_locatedin_yn           String?
+  cs_hotel_pmsoftware             String?
+  cs_hotel_commtype               String?
+  cs_giftcard_accept_yn           String?
+  cs_giftcard_provider            String?
+  cs_hostedsw_apps                String[]
+  email_address                   String?
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model quickbase_contacts {
+  contact_id          Int     @id
+  record_id_quickbase Int?
+  project_name        String?
+  contact_firstname   String?
+  contact_lastname    String?
+  contact_fullname    String?
+  contact_role        String?
+  contact_email       String?
+  contact_phone       String?
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model project_documents {
+  record_id_quickbase Int?
+  name                String?
+  type                String?
+  file_path           String?
+  createdAt           DateTime? @db.Timestamp(6)
+  updatedAt           DateTime? @db.Timestamp(6)
+  id                  Int       @id @default(autoincrement())
+  qb_doc_id           Int?
+}
+
+model access_log {
+  log_id          Int      @id
+  user_uuid       String?  @db.Uuid
+  email_address   String?
+  event_timestamp Int?
+  event_type      String?
+  success         Boolean?
+  mcn_num         String?
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model contact_change_log {
+  contact_id          Int     @id @default(autoincrement())
+  changed_column_name String?
+  old_value           String?
+  new_value           String?
+  change_timestamp    Int?
+  source              String?
+  log_id              String? @db.Uuid
+  source_user_id      String?
+}
+
+model orderSummary {
+  orderNumber     Int     @id
+  user_uuid       String? @db.Uuid
+  organization_id Int?
+  email_address   String?
+}
+
+model pageConfiguration {
+  pageID          Int     @id
+  sectionID       Int?
+  sortOrderNumber Int?
+  pageURL         String?
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model project_change_log {
+  record_id_quickbase Int?
+  changed_column_name String?
+  old_value           String?
+  new_value           String?
+  change_timestamp    Int?
+  source              String?
+  log_id              String  @id @db.Uuid
+  source_user_id      String?
+}
+
+model project_questions_config_table {
+  question_name       String   @id
+  section             String?
+  question_type       String?
+  question_format     String?
+  question_options    String[]
+  workflow            String?
+  question_text       String?
+  dependent_questions String[]
+  question_position   Int?
+  section_id          Int?
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model section_config_table {
+  section_id    Int     @id
+  section_name  String?
+  section_order Int?
+}
+
+model sectionConfiguration {
+  sectionID       Int     @id
+  formType        String?
+  sortOrderNumber Int?
+  sectionName     String?
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model task_change_log {
+  task_id             Int?
+  task_name           String?
+  record_id_quickbase Int?
+  changed_column_name String?
+  old_value           String?
+  new_value           String?
+  change_timestamp    Int?
+  source              String?
+  source_user_id      String?
+  log_id              String  @id @db.Uuid
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model user_details {
+  account_number String?
+  user_firstname String?
+  user_lastname  String?
+  user_email     String?
+
+  @@ignore
+}
+
+model notifications {
+  id          Int       @id @default(autoincrement())
+  mcn_num     Int
+  title       String?
+  description String?
+  tag         String?
+  viewed      Boolean
+  createdAt   DateTime? @default(now())
+  updatedAt   DateTime? @default(now())
+}
+
+model wb_user {
+  id         Int       @id @default(autoincrement())
+  first_name String?
+  last_name  String?
+  email      String    @unique
+  password   String
+  last_login DateTime?
+  created_at DateTime?
+  updated_at DateTime?
+}
+
+model wb_workflow {
+  id                   Int      @id @default(autoincrement())
+  workflow_name        String?
+  workflow_description String?
+  integration_type     String?
+  workflow_type        String?
+  created_at           DateTime
+  updated_at           DateTime
+  order_by             Int?
+}
+
+model wb_task {
+  id                   Int       @id @default(autoincrement())
+  qb_task_id           Int?
+  workflow_id          Int?
+  stage_id             Int?
+  customer_facing_name String?
+  qb_name              String?
+  action_name          String?
+  task_description     String?
+  parent_task_id       Int?
+  date_of_completion   DateTime?
+  customer_milestone   Boolean?
+  action_required      Boolean?
+  task_type            String?
+  task_status          String?
+  created_at           DateTime?
+  order_by             Int?
+}
+
+model wb_stage {
+  id                Int       @id @default(autoincrement())
+  stage_template_id Int?
+  workflow_id       Int?
+  task_id           Int?
+  stage_name        String?
+  stage_type        String?
+  json_data         Json?
+  created_at        DateTime?
+  updated_at        DateTime?
+}
+
+model wb_stage_template {
+  id         Int       @id @default(autoincrement())
+  name       String?
+  type       String?
+  json_data  Json?
+  created_at DateTime?
+}
+
+model wb_parent_task {
+
+  id                  Int       @id @default(autoincrement())
+  name                String?
+  workflow_id         Int?
+  created_at          DateTime?
+
+}
